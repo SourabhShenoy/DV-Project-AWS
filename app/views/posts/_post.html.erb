@@ -14,6 +14,7 @@
     <%= render 'shared/created_at', activity: post %>
     <div class="points">
       <span class="like-count"><%= pluralize(post.cached_votes_up, 'like') %></span>
+      <span class="like-count"><%= pluralize(post.cached_votes_down, 'dislike') %></span>
       <span class="comments-count"><%= pluralize(post.comments_count, 'comment') %></span>
       <div class="pull-right">
         <% if belongs_to_user?(post) %>

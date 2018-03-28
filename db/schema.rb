@@ -89,10 +89,12 @@ ActiveRecord::Schema.define(version: 20170613183247) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "cached_votes_up", default: 0
+    t.integer  "cached_votes_down", default: 0
     t.integer  "comments_count",  default: 0
     t.string   "location"
     t.string   "latlng",          default: ""
     t.index ["cached_votes_up"], name: "index_events_on_cached_votes_up"
+    t.index ["cached_votes_down"], name: "index_events_on_cached_votes_down"
     t.index ["comments_count"], name: "index_events_on_comments_count"
     t.index ["user_id"], name: "index_events_on_user_id"
   end
@@ -163,6 +165,7 @@ ActiveRecord::Schema.define(version: 20170613183247) do
     t.datetime "updated_at"
     t.string   "slug"
     t.integer  "cached_votes_up", default: 0
+    t.integer  "cached_votes_down", default: 0
     t.integer  "comments_count",  default: 0
     t.index ["slug"], name: "index_photo_albums_on_slug", unique: true
     t.index ["user_id"], name: "index_photo_albums_on_user_id"
@@ -184,9 +187,11 @@ ActiveRecord::Schema.define(version: 20170613183247) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "cached_votes_up", default: 0
+    t.integer  "cached_votes_down", default: 0
     t.integer  "comments_count",  default: 0
     t.text     "preview_html",    default: "", null: false
     t.index ["cached_votes_up"], name: "index_posts_on_cached_votes_up"
+    t.index ["cached_votes_down"], name: "index_posts_on_cached_votes_down"
     t.index ["comments_count"], name: "index_posts_on_comments_count"
     t.index ["user_id"], name: "index_posts_on_user_id"
   end
@@ -237,6 +242,20 @@ ActiveRecord::Schema.define(version: 20170613183247) do
   end
 
   create_table "votes", force: :cascade do |t|
+    t.string   "votable_type"
+    t.integer  "votable_id"
+    t.string   "voter_type"
+    t.integer  "voter_id"
+    t.boolean  "vote_flag"
+    t.string   "vote_scope"
+    t.integer  "vote_weight"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.index ["votable_id", "votable_type", "vote_scope"], name: "index_votes_on_votable_id_and_votable_type_and_vote_scope"
+    t.index ["voter_id", "voter_type", "vote_scope"], name: "index_votes_on_voter_id_and_voter_type_and_vote_scope"
+  end
+
+  create_table "downvotes", force: :cascade do |t|
     t.string   "votable_type"
     t.integer  "votable_id"
     t.string   "voter_type"

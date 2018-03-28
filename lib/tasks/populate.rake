@@ -87,6 +87,15 @@ namespace :fill do
       puts "post #{post.id} liked by user #{user.name}"
     end
 
+    15.times do
+      post = posts.sample
+      user = users.sample
+      post.disliked_by user
+      puts "post #{post.id} liked by user #{user.name}"
+    end
+
+
+
     puts 'Creating Likes For Events'
     puts '========================='
     events = Event.all
@@ -95,6 +104,13 @@ namespace :fill do
       event = events.sample
       user = users.sample
       event.liked_by user
+      puts "event #{event.id} liked by user #{user.name}"
+    end
+
+    15.times do
+      event = events.sample
+      user = users.sample
+      event.disliked_by user
       puts "event #{event.id} liked by user #{user.name}"
     end
 
